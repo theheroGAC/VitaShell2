@@ -94,8 +94,8 @@ int shellKernelIsUx0Redirected(const char *blkdev, const char *blkdev2) {
     return 0;
   }
 
-  ksceKernelStrncpyUserToKernel(k_blkdev, (uintptr_t)blkdev, sizeof(k_blkdev)-1);
-  ksceKernelStrncpyUserToKernel(k_blkdev2, (uintptr_t)blkdev2, sizeof(k_blkdev2)-1);
+  ksceKernelStrncpyFromUser(k_blkdev, blkdev, sizeof(k_blkdev) - 1);
+  ksceKernelStrncpyFromUser(k_blkdev2, blkdev2, sizeof(k_blkdev2) - 1);
 
   if (mount && mount->dev && mount->dev->blkdev && strcmp(mount->dev->blkdev, k_blkdev) == 0) {
     EXIT_SYSCALL(state);
@@ -116,8 +116,8 @@ int shellKernelRedirectUx0(const char *blkdev, const char *blkdev2) {
     return -1;
   }
 
-  ksceKernelStrncpyUserToKernel(ux0_blkdev, (uintptr_t)blkdev, sizeof(ux0_blkdev)-1);
-  ksceKernelStrncpyUserToKernel(ux0_blkdev2, (uintptr_t)blkdev2, sizeof(ux0_blkdev2)-1);
+  ksceKernelStrncpyFromUser(ux0_blkdev, blkdev, sizeof(ux0_blkdev) - 1);
+  ksceKernelStrncpyFromUser(ux0_blkdev2, blkdev2, sizeof(ux0_blkdev2) - 1);
 
   mount->dev = &ux0_dev;
   mount->dev2 = &ux0_dev;
